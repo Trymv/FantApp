@@ -35,7 +35,15 @@ public class LoginViewModel extends ViewModel {
         new AsyncTask<Void, Void, Result>() {
             @Override
             protected Result doInBackground(Void... voids) {
-                return loginRepository.login(username, password);
+                Result result = null;
+                try {
+                     result = loginRepository.login(username, password);
+                    System.out.println("Username: " + username + ", Password: " + password + "\n");
+                } catch(Throwable t) {
+                    t.printStackTrace();
+                }
+
+                return result;
             }
 
             @Override

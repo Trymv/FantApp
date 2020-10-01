@@ -29,6 +29,7 @@ public class ChatService implements Response.ErrorListener {
 
     public static ChatService initialize(Context context, String token) {
         SINGLETON = new ChatService(context, token);
+        System.out.println("Token is: " + token + "\n");
         return SINGLETON;
     }
 
