@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "no.trymv.fantj"
-        minSdkVersion 24
+        minSdkVersion 30
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation "com.android.support:support-annotations:28.0.0" //Did not help
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -39,5 +40,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
 }

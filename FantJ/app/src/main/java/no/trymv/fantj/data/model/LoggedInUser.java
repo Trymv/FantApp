@@ -5,16 +5,16 @@ package no.trymv.fantj.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
+    private String userEmail;
     private String token;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
+    public LoggedInUser(String userEmail, String token) {
+        this.userEmail = userEmail;
         this.token = token;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public String getToken() {
