@@ -6,13 +6,13 @@ import org.json.JSONObject;
 public class User {
     String firstName;
     String lastName;
-    String userid;
+    String userId;
 
     public User() {
     }
 
     public User(JSONObject jo) throws JSONException {
-        setUserid(jo.getString("userid"));
+        setUserid(jo.getString("userId"));
         if(jo.has("firstName")) {
             setFirstName(jo.getString("firstName"));
         }
@@ -30,11 +30,11 @@ public class User {
     }
 
     public String getUserid() {
-        return userid;
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserid(String userId) {
+        this.userId = userId;
     }
 
     public String getLastName() {
