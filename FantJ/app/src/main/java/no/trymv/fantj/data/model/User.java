@@ -1,4 +1,4 @@
-package no.trymv.fantj;
+package no.trymv.fantj.data.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
