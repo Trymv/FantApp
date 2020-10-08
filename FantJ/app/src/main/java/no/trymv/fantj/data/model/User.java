@@ -7,6 +7,8 @@ public class User {
     String firstName;
     String lastName;
     String userId;
+    String phoneNumber;
+    String email;
 
     public User() {
     }
@@ -15,9 +17,19 @@ public class User {
         setUserid(jo.getString("userId"));
         if(jo.has("firstName")) {
             setFirstName(jo.getString("firstName"));
+            System.out.println("First name is: " + this.firstName + "\n");
         }
         if(jo.has("lastName")) {
             setLastName(jo.getString("lastName"));
+            System.out.println("Last name is: " + this.lastName + "\n");
+        }
+        if(jo.has("phoneNumber")) {
+            setPhoneNumber(jo.getString("phoneNumber"));
+            System.out.println("Phone number is: " + this.phoneNumber + "\n");
+        }
+        if(jo.has("email")) {
+            setEmail(jo.getString("email"));
+            System.out.println("Email is: " + this.email + "\n");
         }
     }
 
@@ -43,5 +55,21 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

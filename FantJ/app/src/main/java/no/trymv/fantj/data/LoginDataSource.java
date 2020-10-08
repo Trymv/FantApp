@@ -1,6 +1,6 @@
 package no.trymv.fantj.data;
 
-import no.trymv.fantj.ChatService;
+import no.trymv.fantj.FantService;
 import no.trymv.fantj.data.model.LoggedInUser;
 
 import java.io.BufferedReader;
@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+// TODO: Rename class to DataSource?
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
@@ -18,7 +19,7 @@ public class LoginDataSource {
     public Result<LoggedInUser> login(String username, String password) {
         HttpURLConnection c = null;
         try {
-            URL url = new URL(ChatService.BASE_URL + "resources/fant/login?email=" + username + "&pwd=" + password);
+            URL url = new URL(FantService.BASE_URL + "Fant/resources/fant/login?email=" + username + "&pwd=" + password);
             c = (HttpURLConnection) url.openConnection();
             c.setUseCaches(true);
             c.setRequestMethod("GET");
