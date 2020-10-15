@@ -21,15 +21,15 @@ public class Item {
             System.out.println("Description is: " + this.description + "\n");
         }
         if (jo.has("title")) {
-            setDescription(jo.getString("title"));
+            setTitle(jo.getString("title"));
             System.out.println("Title is: " + this.title + "\n");
         }
         if (jo.has("createdDate")) {
-            setDescription(jo.getString("createdDate"));
+            setCreatedDate(jo.getString("createdDate"));
             System.out.println("CreatedDate is: " + this.createdDate + "\n");
         }
         if (jo.has("priceNok")) {
-            setDescription(jo.getString("priceNok"));
+            setPriceNok(jo.getString("priceNok"));
             System.out.println("Price is: " + this.priceNok + "\n");
         }
     }

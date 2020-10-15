@@ -93,12 +93,12 @@ public class FantService implements Response.ErrorListener {
     }
 
     public void loadItems(Callback<List<FantMarket>> onPostExecute, Response.ErrorListener onError) {
-        requestQueue.add(new SecuredJsonArrayRequest(Request.Method.GET, BASE_URL + "Fant/resources/fantmarket", null,
+        requestQueue.add(new SecuredJsonArrayRequest(Request.Method.GET, BASE_URL + "Fant/resources/fantmarket/allSales", null,
                 response -> {
                     List<FantMarket> result = new ArrayList<>();
-                    System.out.println("All sales respond is: " + response + "\n");
                     try {
                         for (int i = 0; i < response. length(); i++) {
+                            System.out.println("Sale respond " + i + " is: " + response.getJSONObject(i) + "\n");
                             result.add(new FantMarket(response.getJSONObject(i)));
                         }
                     } catch (JSONException e) {
