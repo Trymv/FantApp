@@ -11,9 +11,7 @@ public class FantMarket {
     List<Item> items = new ArrayList<>();
 
     public FantMarket(JSONObject jo) throws JSONException {
-        System.out.println("FantMarket!\n");
         if(jo != null) {
-            System.out.println("FantMarket if was true\n");
             Item itemToAdd = new Item(jo);
                 this.items.add(itemToAdd);
         } else {

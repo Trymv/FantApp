@@ -3,6 +3,8 @@ package no.trymv.fantj;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,13 +22,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import no.trymv.fantj.data.model.FantMarket;
 import no.trymv.fantj.data.model.User;
 
 public class FantService implements Response.ErrorListener {
-    public static final String BASE_URL = "http://192.168.0.180:8080/";
+    public static final String BASE_URL = "http://192.168.56.1:8080/";
     static FantService SINGLETON;
+
+    private MutableLiveData<User> mUserLiveData;
 
     User user;
 
@@ -46,7 +51,18 @@ public class FantService implements Response.ErrorListener {
     public FantService(Context context, String token) {
         this.token = token;
         this.requestQueue = Volley.newRequestQueue(context);
-        loadUser();
+        if(mUserLiveData == null) {
+            mUserLiveData = new MutableLiveData<>();
+        }
+        loadUser(callbackResult -> {
+            if(callbackResult != null) {
+               this.user = callbackResult;
+               mUserLiveData.postValue(callbackResult);
+
+            } else {
+                System.out.println("Callback in FantService failed.");
+            }
+        });
     }
 
     @Override
@@ -58,13 +74,14 @@ public class FantService implements Response.ErrorListener {
         return user;
     }
 
-    public void loadUser() {
+    public void loadUser(Consumer<User> loadedUserCallback) {
         requestQueue.add(new SecuredJsonObjectRequest(Request.Method.GET, BASE_URL + "Fant/resources/fant/currentuser", null,
                 response -> {
                     System.out.println("Response is: " + response + "\n");
                     try {
-                        user = new User(response);
+                        loadedUserCallback.accept(new User(response));
                     } catch (JSONException e) {
+                        loadedUserCallback.accept(null);
                         e.printStackTrace();
                     }
                 }, this));
@@ -117,5 +134,9 @@ public class FantService implements Response.ErrorListener {
         public Map<String, String> getHeaders() {
             return FantService.this.getHeaders();
         }
+    }
+
+    public LiveData<User> getmUserLiveData() {
+        return mUserLiveData;
     }
 }

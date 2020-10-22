@@ -1,5 +1,6 @@
 package no.trymv.fantj;
 
+import android.icu.text.SymbolTable;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -8,8 +9,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.function.Consumer;
 
 import no.trymv.fantj.data.model.User;
 
@@ -25,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setUserInfo();
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -39,15 +41,32 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         FantService.getInstance().loadItems(adapter::setConversations,System.out::println);
+
+        setUserInfo(returnedUser -> {
+            if(returnedUser != null) {
+                System.out.println("Callback was sucsessful.\n");
+                TextView lastName = findViewById(R.id.first_name);
+                lastName.setText(returnedUser.getLastName());
+            } else {
+                System.out.println("Callback failed.\n");
+            }
+        });
     }
 
-    private void setUserInfo() {
+    private void setUserInfo(Consumer<User> createdUserCallback) {
+        System.out.println("Setting user info. \n");
         service = FantService.getInstance();
-        User user = service.getUser();
-        if(user != null) {
-            TextView lastName = findViewById(R.id.first_name);
-
-            lastName.setText(user.getLastName());
-        }
+        service.getmUserLiveData().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user != null) {
+                    System.out.println("User was not null. \n");
+                    createdUserCallback.accept(user);
+                } else {
+                    System.out.println("user was null. \n");
+                    createdUserCallback.accept(null);
+                }
+            }
+        });
     }
 }
